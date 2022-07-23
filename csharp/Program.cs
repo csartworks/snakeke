@@ -3,4 +3,4 @@
 // Console.WriteLine("World");
 
 Game game = new Game();
-game.DrawArenaUpperBorder();
+game.DrawArena();
