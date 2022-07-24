@@ -73,7 +73,7 @@ public class SnakeTest
         game.ElapseTime();
         game.SetSnakeDirection(Direction.Left);
         game.ElapseTime();
-        game.SetSnakeDirection(Direction.Right);
+        game.SetSnakeDirection(Direction.Up);
         game.ElapseTime();
         Assert.True(game.IsGameOver);
     }
@@ -94,6 +94,19 @@ public class SnakeTest
         game.SetSnakeDirection(Direction.Left);
         game.ElapseTime();
         Assert.Equal(Snake.Symbol, game.GetAt(9, 5));
+    }
+    [Fact]
+    public void SnakeTest_CannotTurnBack()
+    {
+        Game game = new();
+        game.SpawnSnake(0,10);
+        game.SetSnakeDirection(Direction.Up);
+        game.ElapseTime();
+        Assert.Equal(Snake.Symbol, game.GetAt(0,9));
+        game.SetSnakeDirection(Direction.Down);
+        game.ElapseTime();
+        Assert.NotEqual(Snake.Symbol, game.GetAt(0,10));
+        Assert.Equal(Snake.Symbol, game.GetAt(0,8));
     }
     [Fact]
     public void SnakeTest_LengthenSnake()

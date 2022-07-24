@@ -24,10 +24,7 @@ internal class Game
     }
     public void EraseAt((int x, int y) v) => EraseAt(v.x, v.y);
 
-    internal void SpawnFood()
-    {
-        SpawnFood(rnd.Next(ArenaBuilder.game_width), rnd.Next(ArenaBuilder.game_height));
-    }
+
 
     public void WriteAt(char v, int x, int y)
     {
@@ -74,17 +71,22 @@ internal class Game
         TailPoses.Enqueue(SnakePos);
     }
 
-    internal void SetSnakeDirection(Direction direction)
+    internal void SetSnakeDirection(Direction direction) => SetSnakeDirection(direction.ToMovement());
+    internal void SetSnakeDirection((int x, int y) direction, bool force = false)
     {
-        SnakeMovement = direction.ToMovement();
-    }
-    internal void SetSnakeDirection((int, int) direction)
-    {
+        if (SnakeMovement.x + direction.x == 0 && SnakeMovement.y + direction.y == 0)
+        {
+            return;
+        }
         SnakeMovement = direction;
     }
 
     internal void SpawnFood(int x, int y)
     {
         WriteAt(FOOD, x, y);
+    }
+    internal void SpawnFood()
+    {
+        SpawnFood(rnd.Next(1, ArenaBuilder.game_width), rnd.Next(1, ArenaBuilder.game_height));
     }
 }

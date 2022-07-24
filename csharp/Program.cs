@@ -13,10 +13,16 @@ public class Program
         game.SpawnFood();
         // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
 
-        Timer timer = new(800);
-        timer.Elapsed += OnTick;
-        timer.Enabled = true;
-        timer.Start();
+        Timer gameTime = new(800);
+        gameTime.Elapsed += OnTick;
+        gameTime.Enabled = true;
+        gameTime.Start();
+
+        Timer inputTimer = new(5);
+        gameTime.Elapsed += OnInputTick;
+        gameTime.Enabled = true;
+        gameTime.Start();
+
         while (!game.IsGameOver)
         {
 
@@ -30,16 +36,26 @@ public class Program
             currentTime++;
             if (currentTime % 10 == 0) game.SpawnFood();
             if (game.IsGameOver) return;
-            if (Console.KeyAvailable)
-            {
-                ConsoleKeyInfo info = Console.ReadKey(true);
-                (int, int)? dir = info.Key.ToTuple();
-                if (dir is (int, int) dir2)
-                {
-                    game.SetSnakeDirection(dir2);
-                }
-            }
             game.ElapseTime();
+        }
+
+        void OnInputTick(object? source, ElapsedEventArgs e)
+        {
+            ConsoleKeyInfo info = Console.ReadKey(true);
+            (int, int)? dir = info.Key.ToTuple();
+            if (dir is (int, int) dir2)
+            {
+                game.SetSnakeDirection(dir2);
+            }
+            // if (Console.KeyAvailable)
+            // {
+            //     ConsoleKeyInfo info = Console.ReadKey(true);
+            //     (int, int)? dir = info.Key.ToTuple();
+            //     if (dir is (int, int) dir2)
+            //     {
+            //         game.SetSnakeDirection(dir2);
+            //     }
+            // }
         }
     }
 }
