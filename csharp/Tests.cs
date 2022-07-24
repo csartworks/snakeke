@@ -56,6 +56,28 @@ public class SnakeTest
         Assert.True(game.IsGameOver);
     }
     [Fact]
+    public void SnakeTest_SnakeDiesIfCatchesItSelf()
+    {
+        Game game = new();
+        game.SpawnSnake(0, 0);
+        game.SpawnFood(1, 0);
+        game.SpawnFood(2, 0);
+        game.SpawnFood(3, 0);
+        game.SpawnFood(4, 0);
+        game.SetSnakeDirection(Direction.Right);
+        game.ElapseTime();
+        game.ElapseTime();
+        game.ElapseTime();
+        game.ElapseTime();
+        game.SetSnakeDirection(Direction.Down);
+        game.ElapseTime();
+        game.SetSnakeDirection(Direction.Left);
+        game.ElapseTime();
+        game.SetSnakeDirection(Direction.Right);
+        game.ElapseTime();
+        Assert.True(game.IsGameOver);
+    }
+    [Fact]
     public void SnakeTest_TurnRight()
     {
         Game game = new();

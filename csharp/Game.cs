@@ -60,10 +60,15 @@ internal class Game
         }
         char c = GetAt(Snake.Pos);
         if (c == FOOD) SnakeLength++;
-        else
+        else if (c != Snake.Symbol)
         {
             Position tail = TailPoses.Dequeue();
             EraseAt(tail.x, tail.y);
+        }
+        else if (c == Snake.Symbol)
+        {
+            IsGameOver = true;
+            return;
         }
         WriteAt(Snake.Symbol, SnakePos.x, SnakePos.y);
         TailPoses.Enqueue(SnakePos);
