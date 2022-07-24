@@ -3,8 +3,11 @@ using Timer = System.Timers.Timer;
 public class Program
 {
     private static int currentTick;
-    private static int currentTime = -1;
+    private const int foodRate = 20;//the higher it is, the slower it is
     public static int score;
+    public static Timer GameTimer;
+    public const int GameSpeed = 1000;
+    public static int CurrentGameSpeed = GameSpeed;
     public static void Main(string[] args)
     {
         Console.Clear();
@@ -15,15 +18,15 @@ public class Program
         game.SpawnFood();
         // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
 
-        Timer gameTime = new(1);
-        gameTime.Elapsed += OnTick;
-        gameTime.Enabled = true;
-        gameTime.Start();
+        GameTimer = new(GameSpeed);
+        GameTimer.Elapsed += OnTick;
+        GameTimer.Enabled = true;
+        GameTimer.Start();
 
-        Timer inputTimer = new(5);
-        gameTime.Elapsed += OnInputTick;
-        gameTime.Enabled = true;
-        gameTime.Start();
+        Timer inputTimer = new(100);
+        GameTimer.Elapsed += OnInputTick;
+        GameTimer.Enabled = true;
+        GameTimer.Start();
 
 
         while (!game.IsGameOver)
@@ -36,15 +39,12 @@ public class Program
 
         void OnTick(object? source, ElapsedEventArgs e)
         {
-            currentTime++;
-            StatusLine.Write($"Score : {currentTime}");
-            if (currentTime % 1000 != 0) return;
             currentTick++;
-            if (currentTick % 10 == 0) game.SpawnFood();
+            if (currentTick % foodRate == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
             score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength);
-            StatusLine.Write($"Score : {score}");
+            StatusLine.Write($"Score : {score}  Speed : {CurrentGameSpeed}");
 
         }
 
@@ -52,19 +52,8 @@ public class Program
         {
             ConsoleKeyInfo info = Console.ReadKey(true);
             (int, int)? dir = info.Key.ToTuple();
-            if (dir is (int, int) dir2)
-            {
-                game.SetSnakeDirection(dir2);
-            }
-            // if (Console.KeyAvailable)
-            // {
-            //     ConsoleKeyInfo info = Console.ReadKey(true);
-            //     (int, int)? dir = info.Key.ToTuple();
-            //     if (dir is (int, int) dir2)
-            //     {
-            //         game.SetSnakeDirection(dir2);
-            //     }
-            // }
+            if (dir is not (int, int) dir2) return;
+            game.SetSnakeDirection(dir2);
         }
     }
 }

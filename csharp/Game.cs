@@ -59,7 +59,10 @@ internal class Game
         if (c == FOOD)
         {
             SnakeLength++;
-            Program.score += (int)MathF.Pow(10, SnakeLength);
+            Program.score += 1000;
+            Program.CurrentGameSpeed = 1000 - 50 * SnakeLength;
+            Program.GameTimer = new(Program.CurrentGameSpeed);
+            Program.GameTimer.Start();
         }
         else if (c != Snake.Symbol)
         {
