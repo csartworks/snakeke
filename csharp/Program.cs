@@ -2,7 +2,8 @@ using System.Timers;
 using Timer = System.Timers.Timer;
 public class Program
 {
-    private static int currentTime;
+    private static int currentTick;
+    private static int currentTime = -1;
     public static int score;
     public static void Main(string[] args)
     {
@@ -14,7 +15,7 @@ public class Program
         game.SpawnFood();
         // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
 
-        Timer gameTime = new(800);
+        Timer gameTime = new(1);
         gameTime.Elapsed += OnTick;
         gameTime.Enabled = true;
         gameTime.Start();
@@ -36,11 +37,15 @@ public class Program
         void OnTick(object? source, ElapsedEventArgs e)
         {
             currentTime++;
-            if (currentTime % 10 == 0) game.SpawnFood();
+            StatusLine.Write($"Score : {currentTime}");
+            if (currentTime % 1000 != 0) return;
+            currentTick++;
+            if (currentTick % 10 == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
             score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength);
             StatusLine.Write($"Score : {score}");
+
         }
 
         void OnInputTick(object? source, ElapsedEventArgs e)
