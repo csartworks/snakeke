@@ -1,14 +1,38 @@
-﻿// Console.WriteLine("Hello");
-// Thread.Sleep(1000);
-// Console.WriteLine("World");
-
-Console.Clear();
-Game game = new Game();
-game.DrawArena();
-game.SpawnSnake();
-
-while (!game.IsGameOver)
+using System.Timers;
+using Timer = System.Timers.Timer;
+public class Program
 {
-    Thread.Sleep(1000);
-    game.ElapseTime();
+    public static void Main(string[] args)
+    {
+        Console.Clear();
+        ArenaBuilder.DrawArena();
+        Game game = new Game();
+        game.SpawnSnake();
+        // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
+
+        Timer timer = new(500);
+        timer.Elapsed += OnTick;
+        timer.Enabled = true;
+        timer.Start();
+        while(!game.IsGameOver)
+        {
+
+        }
+        Console.WriteLine("Your snake died.");
+
+        void OnTick(object? source, ElapsedEventArgs e)
+        {
+            if (game.IsGameOver) return;
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo info = Console.ReadKey(true);
+                (int, int)? dir = info.Key.ToTuple();
+                if (dir is (int, int) dir2)
+                {
+                    game.SetSnakeDirection(dir2);
+                }
+            }
+            game.ElapseTime();
+        }
+    }
 }
