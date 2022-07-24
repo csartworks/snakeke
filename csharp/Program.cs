@@ -43,7 +43,7 @@ public class Program
             // if (currentTick % foodRate == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
-            score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength) / 2;
+            score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength) / 10;
             StatusLine.Write($"Score : {score}  Speed : {CurrentGameSpeed}");
 
         }
