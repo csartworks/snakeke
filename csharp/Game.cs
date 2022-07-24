@@ -7,9 +7,13 @@ internal class Game
     private (int x, int y) SnakePos => Snake.Pos;
     public Snake Snake { get; private set; } = default!;
     public bool IsGameOver { get; private set; }
-    internal char GetCharAt(int x, int y)
+    internal char GetAt(int x, int y)
     {
         return _map[x, y];
+    }
+    public char GetAt((int x, int y) v)
+    {
+        return _map[v.x, v.y];
     }
     private void EraseAt(int x, int y)
     {
@@ -45,15 +49,25 @@ internal class Game
             IsGameOver = true;
             return;
         }
+        char c = GetAt(Snake.Pos);
+        if (c == '*') SnakeLength++;
         WriteAt(Snake.Symbol, SnakePos.x, SnakePos.y);
     }
 
     private (int x, int y) SnakeMovement { get; set; }
+    public int SnakeLength { get; internal set; } = 1;
+
     internal void SetSnakeDirection(Direction direction)
     {
         SnakeMovement = direction.ToMovement();
     }
     internal void SetSnakeDirection((int, int) direction)
     {
+        SnakeMovement = direction;
+    }
+
+    internal void SpawnFood(int x, int y)
+    {
+        WriteAt('*', x, y);
     }
 }

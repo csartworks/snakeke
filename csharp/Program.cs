@@ -8,6 +8,7 @@ public class Program
         ArenaBuilder.DrawArena();
         Game game = new Game();
         game.SpawnSnake();
+        game.SpawnFood(3, 3);
         // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
 
         Timer timer = new(500);

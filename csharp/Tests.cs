@@ -2,10 +2,10 @@ using Xunit;
 public class DrawArenaTest
 {
     [Fact]
-    public void ArenaDrawTest_UpperBorder()
+    public void ArenaDrawTest_HorizontalBorder()
     {
         string upperBorder = ArenaBuilder.DrawArenaHorizontalBorder();
-        Assert.Equal("|--------------------|", upperBorder);
+        Assert.Equal("+--------------------+", upperBorder);
     }
     [Fact]
     public void ArenaDrawTest_DrawSingleLine()
@@ -24,7 +24,7 @@ public class DrawArenaTest
     public void MapTest_GetCharAt()
     {
         Game game = new();
-        Assert.Equal('\0', game.GetCharAt(0, 0));
+        Assert.Equal('\0', game.GetAt(0, 0));
     }
 }
 
@@ -35,7 +35,7 @@ public class SnakeTest
     {
         Game game = new();
         game.SpawnSnake();
-        Assert.Equal(Snake.Symbol, game.GetCharAt(10, 5));
+        Assert.Equal(Snake.Symbol, game.GetAt(10, 5));
         Assert.Equal(game.Snake.Pos, (10, 5));
     }
     [Fact]
@@ -44,8 +44,8 @@ public class SnakeTest
         Game game = new();
         game.SpawnSnake();
         game.ElapseTime();
-        Assert.Equal('\0', game.GetCharAt(10, 5));
-        Assert.Equal(Snake.Symbol, game.GetCharAt(10, 4));
+        Assert.Equal('\0', game.GetAt(10, 5));
+        Assert.Equal(Snake.Symbol, game.GetAt(10, 4));
     }
     [Fact]
     public void SnakeTest_SnakeDeath()
@@ -53,7 +53,7 @@ public class SnakeTest
         Game game = new();
         game.SpawnSnake(0, 0);
         game.ElapseTime();
-        Assert.Equal(true, game.IsGameOver);
+        Assert.True(game.IsGameOver);
     }
     [Fact]
     public void SnakeTest_TurnRight()
@@ -62,7 +62,7 @@ public class SnakeTest
         game.SpawnSnake();
         game.SetSnakeDirection(Direction.Right);
         game.ElapseTime();
-        Assert.Equal(Snake.Symbol, game.GetCharAt(11, 5));
+        Assert.Equal(Snake.Symbol, game.GetAt(11, 5));
     }
     [Fact]
     public void SnakeTest_TurnLeft()
@@ -71,6 +71,22 @@ public class SnakeTest
         game.SpawnSnake();
         game.SetSnakeDirection(Direction.Left);
         game.ElapseTime();
-        Assert.Equal(Snake.Symbol, game.GetCharAt(9, 5));
+        Assert.Equal(Snake.Symbol, game.GetAt(9, 5));
+    }
+}
+
+public class FoodTest
+{
+    [Fact]
+    public void FoodTest_TestFoodSpawn()
+    {
+        Game game = new();
+        game.SpawnSnake();
+        game.SpawnFood(10, 3);
+        Assert.Equal(1, game.SnakeLength);
+        game.ElapseTime();
+        Assert.Equal(1, game.SnakeLength);
+        game.ElapseTime();
+        Assert.Equal(2, game.SnakeLength);
     }
 }
