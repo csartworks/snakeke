@@ -60,7 +60,7 @@ internal class Game
         {
             SnakeLength++;
             Program.score += 1000;
-            Program.CurrentGameSpeed = 1000 - 50 * SnakeLength;
+            Program.CurrentGameSpeed = 1000 - 100 * SnakeLength;
             Program.GameTimer = new(Program.CurrentGameSpeed);
             Program.GameTimer.Start();
         }

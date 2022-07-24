@@ -33,7 +33,7 @@ public class Program
         {
 
         }
-        Console.WriteLine("Your snake died.");
+        StatusLine.Write($"Score : {score}  Speed : {CurrentGameSpeed} \nYour Snake Died.");
         Console.CursorVisible = true;
         Environment.Exit(0);
 
@@ -43,7 +43,7 @@ public class Program
             if (currentTick % foodRate == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
-            score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength);
+            score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength) / 2;
             StatusLine.Write($"Score : {score}  Speed : {CurrentGameSpeed}");
 
         }
