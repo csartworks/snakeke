@@ -1,4 +1,7 @@
 [ ] maybe seperate tty from the game
 
 [x] spawn snake
-[ ] it moves foward(up) for each second
+[x] it moves foward(up) for each second
+[ ] snake dies if collides with wall
+[ ] remove old Print()
+[ ] resolve snake not init in cons_ warning

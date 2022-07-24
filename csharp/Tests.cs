@@ -48,4 +48,12 @@ public class SnakeTest
         Assert.Equal('\0', game.GetCharAt(10, 5));
         Assert.Equal(Snake.Symbol, game.GetCharAt(10, 4));
     }
+    [Fact]
+    public void SnakeTest_SnakeDeath()
+    {
+        Game game = new();
+        game.SpawnSnake(0, 0);
+        game.ElapseTime();
+        Assert.Equal(true, game.IsGameOver);
+    }
 }

@@ -13,13 +13,10 @@ internal class Game
 
     public string LastOutput { get; private set; } = "";
     public (int x, int y) SnakePos => Snake.Pos;
-    public Snake Snake { get; internal set; }
+    public Snake Snake { get; private set; }
+    public bool IsGameOver { get; private set; }
 
-    private void Print(object v)
-    {
-        Console.WriteLine(v);
-        LastOutput = (string)v;
-    }
+
     internal string DrawArena_SingleLine()
     {
         return "|" + new string(' ', game_width) + "|";
@@ -27,12 +24,12 @@ internal class Game
 
     internal void DrawArena()
     {
-        Print(DrawArenaHorizontalBorder());
+        Console.WriteLine(DrawArenaHorizontalBorder());
         for (int i = 0; i < game_height; i++)
         {
-            Print(DrawArena_SingleLine());
+            Console.WriteLine(DrawArena_SingleLine());
         }
-        Print(DrawArenaHorizontalBorder());
+        Console.WriteLine(DrawArenaHorizontalBorder());
     }
 
     internal void SpawnSnake()
@@ -55,7 +52,13 @@ internal class Game
     {
         EraseAt(SnakePos.x, SnakePos.y);
         Snake.Pos = (Snake.Pos.x, Snake.Pos.y - 1);
+        if (SnakePos.x < 0 || SnakePos.y < 0)
+        {
+            IsGameOver = true;
+            return;
+        }
         WriteAt(Snake.Symbol, SnakePos.x, SnakePos.y);
+
     }
     private void EraseAt(int x, int y)
     {

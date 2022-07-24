@@ -7,7 +7,7 @@ Game game = new Game();
 game.DrawArena();
 game.SpawnSnake();
 
-for (int i = 0; i < 10; i++)
+while (!game.IsGameOver)
 {
     Thread.Sleep(1000);
     game.ElapseTime();
