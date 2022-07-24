@@ -3,6 +3,7 @@ using Timer = System.Timers.Timer;
 public class Program
 {
     private static int currentTime;
+    public static int score;
     public static void Main(string[] args)
     {
         Console.Clear();
@@ -23,6 +24,7 @@ public class Program
         gameTime.Enabled = true;
         gameTime.Start();
 
+
         while (!game.IsGameOver)
         {
 
@@ -37,6 +39,8 @@ public class Program
             if (currentTime % 10 == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
+            score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength);
+            StatusLine.Write($"Score : {score}");
         }
 
         void OnInputTick(object? source, ElapsedEventArgs e)

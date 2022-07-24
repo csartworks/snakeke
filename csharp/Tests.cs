@@ -142,3 +142,12 @@ public class FoodTest
         Assert.Equal(2, game.SnakeLength);
     }
 }
+
+public class InterfaceTest
+{
+    [Fact]
+    public void PrintInterface()
+    {
+        StatusLine.Write("Hello World");
+    }
+}

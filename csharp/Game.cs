@@ -56,7 +56,11 @@ internal class Game
             return;
         }
         char c = GetAt(Snake.Pos);
-        if (c == FOOD) SnakeLength++;
+        if (c == FOOD)
+        {
+            SnakeLength++;
+            Program.score += (int)MathF.Pow(10, SnakeLength);
+        }
         else if (c != Snake.Symbol)
         {
             Position tail = TailPoses.Dequeue();
