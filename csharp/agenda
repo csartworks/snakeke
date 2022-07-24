@@ -1,7 +1,3 @@
-[x] can control snake with arrows or hjkl
-[x] snake does not die by contacting right or left or lower wall
-[x] foods lengthens the snake
-[x] catching itself kills the snake
-[x] cannot turn 180 degrees
-
 [ ] score gaining every second decreases if not eating food.
+[ ] food should not spawn over snake
+[ ] any way of making speed properly fast?
