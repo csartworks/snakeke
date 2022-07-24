@@ -50,3 +50,19 @@ public static class Extensions
         _ => null
     };
 }
+
+public struct Position
+{
+    public int x, y;
+
+    public Position(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public static implicit operator Position((int x, int y) v)
+    {
+        return new Position(v.x, v.y);
+    }
+}

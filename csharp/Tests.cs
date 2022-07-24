@@ -73,6 +73,23 @@ public class SnakeTest
         game.ElapseTime();
         Assert.Equal(Snake.Symbol, game.GetAt(9, 5));
     }
+    [Fact]
+    public void SnakeTest_LengthenSnake()
+    {
+        Game game = new();
+        game.SpawnSnake(0, 0);
+        game.SetSnakeDirection(Direction.Right);
+        Assert.Equal(Snake.Symbol, game.GetAt(0, 0));
+        game.SpawnFood(1, 0);
+        game.ElapseTime();
+        Assert.Equal(2, game.SnakeLength);
+        Assert.Equal(Snake.Symbol, game.GetAt(0, 0));
+        Assert.Equal(Snake.Symbol, game.GetAt(1, 0));
+        game.ElapseTime();
+        Assert.Equal(Game.NULL, game.GetAt(0, 0));
+        Assert.Equal(Snake.Symbol, game.GetAt(1, 0));
+        Assert.Equal(Snake.Symbol, game.GetAt(2, 0));
+    }
 }
 
 public class FoodTest

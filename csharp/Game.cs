@@ -1,26 +1,34 @@
 internal class Game
 {
 
+    public const char FOOD = '*';
     public const char NULL = '\0';
     private char[,] _map = new char[ArenaBuilder.game_width + 1, ArenaBuilder.game_height + 1];
     public string LastOutput { get; private set; } = "";
     private (int x, int y) SnakePos => Snake.Pos;
     public Snake Snake { get; private set; } = default!;
     public bool IsGameOver { get; private set; }
+    private (int x, int y) SnakeMovement { get; set; }
+    public int SnakeLength { get; internal set; } = 1;
+    private Random rnd = new();
     internal char GetAt(int x, int y)
     {
         return _map[x, y];
     }
-    public char GetAt((int x, int y) v)
-    {
-        return _map[v.x, v.y];
-    }
+    public char GetAt((int x, int y) v) => GetAt(v.x, v.y);
     private void EraseAt(int x, int y)
     {
         _map[x, y] = NULL;
         Console.SetCursorPosition(x, y);
         Console.Write(' ');
     }
+    public void EraseAt((int x, int y) v) => EraseAt(v.x, v.y);
+
+    internal void SpawnFood()
+    {
+        SpawnFood(rnd.Next(ArenaBuilder.game_width), rnd.Next(ArenaBuilder.game_height));
+    }
+
     public void WriteAt(char v, int x, int y)
     {
         _map[x, y] = v;
@@ -35,14 +43,15 @@ internal class Game
     internal void SpawnSnake(int x, int y)
     {
         Snake = new Snake(x, y);
+        TailPoses.Enqueue(SnakePos);
         SetSnakeDirection(Direction.Up);
         _map[x, y] = Snake.Symbol;
         Console.SetCursorPosition(x, y);
         Console.Write(Snake.Symbol);
     }
+    private Queue<Position> TailPoses = new();
     internal void ElapseTime()
     {
-        EraseAt(SnakePos.x, SnakePos.y);
         Snake.Pos = (Snake.Pos.x + SnakeMovement.x, Snake.Pos.y + SnakeMovement.y);
         if (SnakePos.x < 0 || SnakePos.x > ArenaBuilder.game_width || SnakePos.y < 0 || SnakePos.y > ArenaBuilder.game_height)
         {
@@ -50,12 +59,15 @@ internal class Game
             return;
         }
         char c = GetAt(Snake.Pos);
-        if (c == '*') SnakeLength++;
+        if (c == FOOD) SnakeLength++;
+        else
+        {
+            Position tail = TailPoses.Dequeue();
+            EraseAt(tail.x, tail.y);
+        }
         WriteAt(Snake.Symbol, SnakePos.x, SnakePos.y);
+        TailPoses.Enqueue(SnakePos);
     }
-
-    private (int x, int y) SnakeMovement { get; set; }
-    public int SnakeLength { get; internal set; } = 1;
 
     internal void SetSnakeDirection(Direction direction)
     {
@@ -68,6 +80,6 @@ internal class Game
 
     internal void SpawnFood(int x, int y)
     {
-        WriteAt('*', x, y);
+        WriteAt(FOOD, x, y);
     }
 }
