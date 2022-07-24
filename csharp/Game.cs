@@ -63,6 +63,7 @@ internal class Game
             Program.CurrentGameSpeed = 1000 - 100 * SnakeLength;
             Program.GameTimer = new(Program.CurrentGameSpeed);
             Program.GameTimer.Start();
+            SpawnFood();
         }
         else if (c != Snake.Symbol)
         {

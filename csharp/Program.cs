@@ -3,7 +3,7 @@ using Timer = System.Timers.Timer;
 public class Program
 {
     private static int currentTick;
-    private const int foodRate = 20;//the higher it is, the slower it is
+    // private const int foodRate = 20;//the higher it is, the slower it is
     public static int score;
     public static Timer GameTimer;
     public const int GameSpeed = 1000;
@@ -40,7 +40,7 @@ public class Program
         void OnTick(object? source, ElapsedEventArgs e)
         {
             currentTick++;
-            if (currentTick % foodRate == 0) game.SpawnFood();
+            // if (currentTick % foodRate == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
             score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength) / 2;
