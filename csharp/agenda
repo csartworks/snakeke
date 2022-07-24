@@ -3,3 +3,5 @@
 [x] foods lengthens the snake
 [x] catching itself kills the snake
 [x] cannot turn 180 degrees
+
+[ ] score gaining every second decreases if not eating food.
