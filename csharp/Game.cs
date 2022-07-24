@@ -1,16 +1,19 @@
 internal class Game
 {
-    private const int _game_width = 20;
-    private const int _game_height = 10;
+    public const int game_width = 20;
+    public const int game_height = 10;
     private const char _horizontalWall = '-';
     private const char _verticalWall = '|';
     private const string _verticalWallLineBreak = "|\n";
+    private char[,] _map = new char[game_width, game_height];
     public Game()
     {
 
     }
 
     public string LastOutput { get; private set; } = "";
+    public (int x, int y) SnakePos => Snake.Pos;
+    public Snake Snake { get; internal set; }
 
     private void Print(object v)
     {
@@ -19,21 +22,59 @@ internal class Game
     }
     internal string DrawArena_SingleLine()
     {
-        return "|" + new string(' ', _game_width) + "|";
+        return "|" + new string(' ', game_width) + "|";
     }
 
     internal void DrawArena()
     {
         Print(DrawArenaHorizontalBorder());
-        for (int i = 0; i < _game_height; i++)
+        for (int i = 0; i < game_height; i++)
         {
             Print(DrawArena_SingleLine());
         }
         Print(DrawArenaHorizontalBorder());
     }
 
+    internal void SpawnSnake()
+    {
+        SpawnSnake(game_width / 2, game_height / 2);
+    }
+
     public string DrawArenaHorizontalBorder()
     {
-        return _verticalWall + new String(_horizontalWall, _game_width) + _verticalWall;
+        return _verticalWall + new String(_horizontalWall, game_width) + _verticalWall;
+    }
+
+    internal char GetCharAt(int x, int y)
+    {
+        return _map[x, y];
+    }
+
+    public const char NULL = '\0';
+    internal void ElapseTime()
+    {
+        EraseAt(SnakePos.x, SnakePos.y);
+        Snake.Pos = (Snake.Pos.x, Snake.Pos.y - 1);
+        WriteAt(Snake.Symbol, SnakePos.x, SnakePos.y);
+    }
+    private void EraseAt(int x, int y)
+    {
+        _map[x, y] = NULL;
+        Console.SetCursorPosition(x, y);
+        Console.Write(' ');
+    }
+    private void WriteAt(char v, int x, int y)
+    {
+        _map[x, y] = v;
+        Console.SetCursorPosition(x, y);
+        Console.Write(v);
+    }
+
+    internal void SpawnSnake(int x, int y)
+    {
+        Snake = new Snake(x, y);
+        _map[x, y] = Snake.Symbol;
+        Console.SetCursorPosition(x, y);
+        Console.Write(Snake.Symbol);
     }
 }

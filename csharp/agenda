@@ -1,4 +1,4 @@
-upper border
-side border
-printing all borders at once
-maybe seperate tty from the game
+[ ] maybe seperate tty from the game
+
+[x] spawn snake
+[ ] it moves foward(up) for each second
