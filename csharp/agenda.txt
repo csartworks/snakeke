@@ -1,5 +1,5 @@
 [ ] score gaining every second decreases if not eating food.
 [ ] refactor Game.elapsetime()
-[ ] food should not spawn over snake
+[ ] food should not spawn on the snakes position
 [ ] any way of making speed properly fast?
 [ ] replace all (int, int) to struct Position
