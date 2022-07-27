@@ -1,3 +1,4 @@
 [ ] score gaining every second decreases if not eating food.
+[ ] refactor Game.elapsetime()
 [ ] food should not spawn over snake
 [ ] any way of making speed properly fast?

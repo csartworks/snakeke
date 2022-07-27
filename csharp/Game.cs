@@ -3,14 +3,18 @@ internal class Game
 
     public const char FOOD = '*';
     public const char NULL = '\0';
-    private char[,] _map = new char[ArenaBuilder.game_width + 1, ArenaBuilder.game_height + 1];
-    public string LastOutput { get; private set; } = "";
-    private (int x, int y) SnakePos => Snake.Pos;
-    public Snake Snake { get; private set; } = default!;
+
     public bool IsGameOver { get; private set; }
+
+    private char[,] _map = new char[ArenaBuilder.game_width + 1, ArenaBuilder.game_height + 1];
+    public Snake Snake { get; private set; } = default!;
+    private (int x, int y) SnakePos => Snake.Pos;
     private (int x, int y) SnakeMovement { get; set; }
     public int SnakeLength { get; internal set; } = 1;
+    private Queue<Position> TailPoses = new();
+
     private Random rnd = new();
+
     internal char GetAt(int x, int y)
     {
         return _map[x, y];
@@ -24,8 +28,6 @@ internal class Game
     }
     public void EraseAt((int x, int y) v) => EraseAt(v.x, v.y);
 
-
-
     public void WriteAt(char v, int x, int y)
     {
         _map[x, y] = v;
@@ -33,10 +35,7 @@ internal class Game
         Console.Write(v);
     }
 
-    internal void SpawnSnake()
-    {
-        SpawnSnake(ArenaBuilder.game_width / 2, ArenaBuilder.game_height / 2);
-    }
+    internal void SpawnSnake() => SpawnSnake(ArenaBuilder.game_width / 2, ArenaBuilder.game_height / 2);
     internal void SpawnSnake(int x, int y)
     {
         Snake = new Snake(x, y);
@@ -46,7 +45,6 @@ internal class Game
         Console.SetCursorPosition(x, y);
         Console.Write(Snake.Symbol);
     }
-    private Queue<Position> TailPoses = new();
     internal void ElapseTime()
     {
         Snake.Pos = (Snake.Pos.x + SnakeMovement.x, Snake.Pos.y + SnakeMovement.y);
@@ -81,19 +79,13 @@ internal class Game
     internal void SetSnakeDirection(Direction direction) => SetSnakeDirection(direction.ToMovement());
     internal void SetSnakeDirection((int x, int y) direction, bool force = false)
     {
-        if (SnakeMovement.x + direction.x == 0 && SnakeMovement.y + direction.y == 0)
-        {
-            return;
-        }
+        if (SnakeMovement.x + direction.x == 0 && SnakeMovement.y + direction.y == 0) return;
         SnakeMovement = direction;
     }
 
+    internal void SpawnFood() => SpawnFood(rnd.Next(1, ArenaBuilder.game_width), rnd.Next(1, ArenaBuilder.game_height));
     internal void SpawnFood(int x, int y)
     {
         WriteAt(FOOD, x, y);
-    }
-    internal void SpawnFood()
-    {
-        SpawnFood(rnd.Next(1, ArenaBuilder.game_width), rnd.Next(1, ArenaBuilder.game_height));
     }
 }
