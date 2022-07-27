@@ -6,5 +6,5 @@ internal class Snake
     {
         Pos = (x, y);
     }
-    public (int x, int y) Pos { get; internal set; }
+    public Position Pos { get; internal set; }
 }

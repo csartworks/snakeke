@@ -13,6 +13,7 @@ public class Program
         Console.CursorVisible = false;
         ArenaBuilder.DrawArena();
         Game game = new Game();
+        game.OnSnakeGrowth += () => OnSnakeEatFood();
         game.SpawnSnake();
         game.SpawnFood();
 
@@ -50,6 +51,12 @@ public class Program
             (int, int)? dir = info.Key.ToTuple();
             if (dir is not (int, int) dir2) return;
             game.SetSnakeDirection(dir2);
+        }
+        void OnSnakeEatFood()
+        {
+            Program.score += 1000;
+            Program.CurrentGameSpeed = (int)MathF.Max(50, 1000 - 100 * game.SnakeLength);
+            Program.GameTimer.Interval = Program.CurrentGameSpeed;
         }
     }
 }

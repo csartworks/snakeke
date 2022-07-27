@@ -7,10 +7,11 @@ internal class Game
 
     private char[,] _map = new char[ArenaBuilder.game_width + 1, ArenaBuilder.game_height + 1];
     public Snake Snake { get; private set; } = default!;
-    private (int x, int y) SnakePos => Snake.Pos;
-    private (int x, int y) SnakeMovement { get; set; }
+    private Position SnakePos => Snake.Pos;
+    private Position SnakeMovement { get; set; }
     public int SnakeLength { get; internal set; } = 1;
     private Queue<Position> TailPoses = new();
+    public event Action OnSnakeGrowth = delegate { };
 
     private Random rnd = new();
 
@@ -18,14 +19,13 @@ internal class Game
     {
         return _map[x, y];
     }
-    public char GetAt((int x, int y) v) => GetAt(v.x, v.y);
+    public char GetAt(Position pos) => GetAt(pos.x, pos.y);
     private void EraseAt(int x, int y)
     {
         _map[x, y] = NULL;
         Console.SetCursorPosition(x, y);
         Console.Write(' ');
     }
-    public void EraseAt((int x, int y) v) => EraseAt(v.x, v.y);
 
     public void WriteAt(char v, int x, int y)
     {
@@ -55,11 +55,9 @@ internal class Game
         char c = GetAt(Snake.Pos);
         if (c == FOOD)
         {
-            SnakeLength++;
-            Program.score += 1000;
-            Program.CurrentGameSpeed = (int)MathF.Max(50, 1000 - 100 * SnakeLength);
-            Program.GameTimer.Interval = Program.CurrentGameSpeed;
+            OnSnakeGrowth.Invoke();
             SpawnFood();
+            SnakeLength++;
         }
         else if (c != Snake.Symbol)
         {

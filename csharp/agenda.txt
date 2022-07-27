@@ -4,6 +4,7 @@ bugs/refactoring
 [ ] replace all (int, int) to struct Position
 [ ] where should we put snakemovement and snakeposition at?
 [ ] make game a singleton and make program's local function into a normal method
+[ ] the test is failing because game.cs knows about program.cs
 
 features/improvements
 [ ] any way of making speed properly fast?
