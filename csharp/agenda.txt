@@ -3,6 +3,7 @@ bugs/refactoring
 [ ] food should not spawn on the snakes position
 [ ] replace all (int, int) to struct Position
 [ ] where should we put snakemovement and snakeposition at?
+[ ] make game a singleton and make program's local function into a normal method
 
 features/improvements
 [ ] any way of making speed properly fast?

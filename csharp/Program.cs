@@ -38,12 +38,10 @@ public class Program
         void OnTick(object? source, ElapsedEventArgs e)
         {
             currentTick++;
-            // if (currentTick % foodRate == 0) game.SpawnFood();
             if (game.IsGameOver) return;
             game.ElapseTime();
             score += (int)MathF.Pow(game.SnakeLength, game.SnakeLength) / 10;
             StatusLine.Write($"Score : {score}  Speed : {CurrentGameSpeed}");
-
         }
 
         void OnInputTick(object? source, ElapsedEventArgs e)
