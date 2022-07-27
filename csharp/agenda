@@ -2,3 +2,4 @@
 [ ] refactor Game.elapsetime()
 [ ] food should not spawn over snake
 [ ] any way of making speed properly fast?
+[ ] replace all (int, int) to struct Position

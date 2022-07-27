@@ -3,7 +3,6 @@ using Timer = System.Timers.Timer;
 public class Program
 {
     private static int currentTick;
-    // private const int foodRate = 20;//the higher it is, the slower it is
     public static int score;
     public static Timer GameTimer;
     public const int GameSpeed = 1000;
@@ -16,7 +15,6 @@ public class Program
         Game game = new Game();
         game.SpawnSnake();
         game.SpawnFood();
-        // game.WriteAt('x', ArenaBuilder.game_width, ArenaBuilder.game_height);
 
         GameTimer = new(GameSpeed);
         GameTimer.Elapsed += OnTick;
