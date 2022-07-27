@@ -4,7 +4,7 @@ public class Program
 {
     private static int currentTick;
     public static int score;
-    public static Timer GameTimer;
+    public static Timer GameTimer = default!;
     public const int GameSpeed = 1000;
     public static int CurrentGameSpeed = GameSpeed;
     public static void Main(string[] args)

@@ -1,6 +1,5 @@
 internal class Game
 {
-
     public const char FOOD = '*';
     public const char NULL = '\0';
 

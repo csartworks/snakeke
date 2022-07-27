@@ -2,6 +2,7 @@ bugs/refactoring
 [ ] refactor Game.elapsetime()
 [ ] food should not spawn on the snakes position
 [ ] replace all (int, int) to struct Position
+[ ] where should we put snakemovement and snakeposition at?
 
 features/improvements
 [ ] any way of making speed properly fast?
